@@ -16,8 +16,8 @@ public class Player : MonoBehaviour
     [SerializeField] float _rollSpeed = 16;
     [SerializeField] float _rollTime = 0.2f;
     [SerializeField] float _rollCooldownTime = 0.25f;
-    float _rollCooldownTimer;
-    Vector2 _rollDir;
+    float _rollCooldownTimer = 0;
+    Vector2 _rollDir = Vector2.up;
 
     // Hit knockback
     const float _knockbackSpeed = 10;
@@ -28,14 +28,18 @@ public class Player : MonoBehaviour
     // General Movement
     Vector2 _velocity;
     Vector2 _moveInput;
-    Vector2 _lastDir;
-    float _lastDirectionFloat = 0.75f; // from 0-1, going clockwise from Vector.right
+    Vector2 _lastDir = Vector2.up;
+    float _lastDirectionFloat = 0.25f; // from 0-1, going clockwise from Vector.right
 
     // Invincibility
     const float _invincibilityDuration = 1f;
     const float _respawnInvincibilityDuration = 0.5f;
     const float _invincibilityFlashTime = 0.1f;
     bool _invincible = false;
+
+    // Health
+    public HealthBar PlayerHealthBar;
+    int _health = 100;
 
     // Other components
     SpriteRenderer _renderer;
@@ -74,6 +78,11 @@ public class Player : MonoBehaviour
 
     void Update()
     {
+        if (_rollCooldownTimer > 0)
+        {
+            _rollCooldownTimer -= Time.deltaTime;
+        }
+
         _animator.SetFloat("SpeedX", _velocity.x);
         _animator.SetFloat("SpeedY", _velocity.y);
         _animator.SetFloat("Speed", _velocity.sqrMagnitude);
@@ -117,6 +126,7 @@ public class Player : MonoBehaviour
     {
         _animator.SetBool("Rolling", false);
         _velocity = Vector2.zero;
+        _rollCooldownTimer = _rollCooldownTime;
     }
 
     IEnumerator RollCoroutine()
@@ -167,8 +177,11 @@ public class Player : MonoBehaviour
 
     void OnRoll(InputValue value)
     {
-        _rollDir = _lastDir;
-        _rolled = true;
+        if (_rollCooldownTimer <= 0 && _stateMachine.State != (int)State.Roll)
+        {
+            _rollDir = _lastDir;
+            _rolled = true;
+        }
     }
 
     #endregion
@@ -185,6 +198,8 @@ public class Player : MonoBehaviour
 
         if (_stateMachine.State != (int)State.Damaged)
         {
+            _health -= damage;
+            PlayerHealthBar.SetHealth(_health);
             _knockbackDir = knockback;
             _stateMachine.State = (int)State.Damaged;
         }
@@ -199,7 +214,7 @@ public class Player : MonoBehaviour
     // starting from Vector.right and going counterclockwise
     float DirectionToAngleRange01(Vector2 direction)
     {
-        float angle = Mathf.Atan2(_moveInput.y, _moveInput.x) / (Mathf.PI * 2);
+        float angle = Mathf.Atan2(direction.y, direction.x) / (Mathf.PI * 2);
         if (angle < 0)
         {
             angle += 1;
