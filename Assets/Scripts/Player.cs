@@ -52,7 +52,7 @@ public class Player : MonoBehaviour
 
 
     #region Internal types
-    public enum State
+    private enum State
     {
         Normal,
         Roll,
@@ -120,6 +120,7 @@ public class Player : MonoBehaviour
         _animator.SetFloat("RollDir", DirectionToAngleRange01(_rollDir));
         _animator.SetBool("Rolling", true);
         _velocity = _rollDir.normalized * _rollSpeed;
+        _invincible = true;
     }
 
     void RollEnd()
@@ -127,6 +128,7 @@ public class Player : MonoBehaviour
         _animator.SetBool("Rolling", false);
         _velocity = Vector2.zero;
         _rollCooldownTimer = _rollCooldownTime;
+        _invincible = false;
     }
 
     IEnumerator RollCoroutine()
