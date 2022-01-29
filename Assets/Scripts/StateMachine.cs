@@ -49,6 +49,11 @@ public class StateMachine : MonoBehaviour
         {
             currentState().beginFunc();
         }
+        if (currentState().coroutineFunc != null)
+        {
+            _coroutine = currentState().coroutineFunc();
+            StartCoroutine(_coroutine);
+        }
     }
 
     private void TransitionState(int state, bool force = false)
