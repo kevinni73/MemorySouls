@@ -4,24 +4,23 @@ using UnityEngine;
 
 public class Knight : MonoBehaviour
 {
-    int _health = 100;
-
     [SerializeField] float _attackCooldownTime = 2f;
     float _attackCooldownTimer;
 
     Sword[] Swords;
-    Animator _animator;
     int _nextSwordIndex = 0;
+
+    Enemy EnemyComponent;
 
     void Awake()
     {
         Swords = GetComponentsInChildren<Sword>();
-        _animator = GetComponent<Animator>();
+        EnemyComponent = GetComponent<Enemy>();
     }
 
     void Update()
     {
-        if (_health <= 0)
+        if (EnemyComponent.Health <= 0)
         {
             return;
         }
@@ -31,17 +30,11 @@ public class Knight : MonoBehaviour
             _attackCooldownTimer -= Time.deltaTime;
         }
 
-        if (Swords[_nextSwordIndex].AttackReady && _attackCooldownTimer <= 0)
+        if (Swords.Length > 0 && Swords[_nextSwordIndex].AttackReady && _attackCooldownTimer <= 0)
         {
             Swords[_nextSwordIndex].Attack();
             _nextSwordIndex = (_nextSwordIndex + 1) % Swords.Length;
             _attackCooldownTimer = _attackCooldownTime;
         }
-    }
-
-    public void TakeDamage(int damage)
-    {
-        _health -= damage;
-        _animator.SetTrigger("Hurt");
     }
 }
