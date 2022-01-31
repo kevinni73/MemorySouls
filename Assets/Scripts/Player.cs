@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
@@ -37,6 +38,9 @@ public class Player : MonoBehaviour
     const float _invincibilityFlashTime = 0.1f;
     bool _invincible = false;
 
+    // Death
+    [SerializeField] float _deathTime = 0.5f;
+
     // Health
     [SerializeField] HealthBar PlayerHealthBar;
     int _health = 100;
@@ -50,16 +54,15 @@ public class Player : MonoBehaviour
 
     #endregion
 
-
     #region Internal types
     private enum State
     {
         Normal,
         Roll,
         Damaged,
+        Dead,
     };
     #endregion
-
 
     #region Monobehavior
     void Awake()
@@ -74,6 +77,7 @@ public class Player : MonoBehaviour
         _stateMachine.AddState((int)State.Normal, NormalUpdate, null, null, null);
         _stateMachine.AddState((int)State.Roll, null, RollCoroutine, RollBegin, RollEnd);
         _stateMachine.AddState((int)State.Damaged, null, DamagedCoroutine, DamagedBegin, DamagedEnd);
+        _stateMachine.AddState((int)State.Dead, null, DeadCoroutine, null, null);
 
         InputManager input = FindObjectOfType<InputManager>();
         input.onMoveEvent += OnMove;
@@ -165,6 +169,18 @@ public class Player : MonoBehaviour
 
     #endregion
 
+    #region Dead State
+
+    IEnumerator DeadCoroutine()
+    {
+        Time.timeScale = 0;
+        _renderer.color = Color.red;
+        yield return new WaitForSecondsRealtime(_deathTime);
+        Time.timeScale = 1;
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    #endregion
 
     #region Inputs
 
@@ -207,6 +223,12 @@ public class Player : MonoBehaviour
             if (PlayerHealthBar)
             {
                 PlayerHealthBar.SetHealth(_health);
+            }
+
+            if (_health <= 0)
+            {
+                _stateMachine.State = (int)State.Dead;
+                return;
             }
             
             _knockbackDir = knockback;

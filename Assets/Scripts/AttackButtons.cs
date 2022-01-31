@@ -108,7 +108,6 @@ public class AttackButtons : MonoBehaviour
                 {
                     // incorrect press
                     _comboIndex = 0;
-                    // todo: should player take damage?
                     Indicators.Incorrect();
                     _buttons[i].Incorrect();
                     _buttons[_combo[_comboIndex]].Deselect();
@@ -201,5 +200,25 @@ public class AttackButtons : MonoBehaviour
             _buttonPresses.Enqueue(ButtonIndex.Right);
         }
     }
+    #endregion
+
+    #region Trigger
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Player"))
+        {
+            ChangeEnabled(true);
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Player"))
+        {
+            ChangeEnabled(false);
+        }
+    }
+
     #endregion
 }

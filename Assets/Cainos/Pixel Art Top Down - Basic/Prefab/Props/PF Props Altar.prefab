@@ -298,7 +298,7 @@ GameObject:
   - component: {fileID: 7947911505737750448}
   - component: {fileID: 7947911505737750450}
   - component: {fileID: 2440844624711060802}
-  - component: {fileID: 2316155398815232977}
+  - component: {fileID: 4773708824228374592}
   m_Layer: 20
   m_Name: PF Props Altar
   m_TagString: Untagged
@@ -393,8 +393,8 @@ MonoBehaviour:
   - {fileID: 6868958710751573116}
   - {fileID: 2128395779313173791}
   lerpSpeed: 3
---- !u!58 &2316155398815232977
-CircleCollider2D:
+--- !u!60 &4773708824228374592
+PolygonCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -406,9 +406,30 @@ CircleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 1.0977485}
-  serializedVersion: 2
-  m_Radius: 1.0781431
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0}
+    oldSize: {x: 2.9375, y: 2.25}
+    newSize: {x: 0.8125, y: 1.625}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Points:
+    m_Paths:
+    - - {x: 0.96875, y: 2}
+      - {x: 0.375, y: 2.25}
+      - {x: -0.40625, y: 2.25}
+      - {x: -1.09375, y: 1.96875}
+      - {x: -1.46875, y: 1.5625}
+      - {x: -1.46875, y: 0.65625}
+      - {x: -1.0625, y: 0.25}
+      - {x: -0.65625, y: 0}
+      - {x: 0.59375, y: 0}
+      - {x: 1.0625, y: 0.25}
+      - {x: 1.46875, y: 0.65625}
+      - {x: 1.46875, y: 1.625}
 --- !u!1 &7947911505844789836
 GameObject:
   m_ObjectHideFlags: 0
