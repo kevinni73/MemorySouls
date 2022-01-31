@@ -34,7 +34,6 @@ public class Player : MonoBehaviour
 
     // Invincibility
     const float _invincibilityDuration = 1f;
-    const float _respawnInvincibilityDuration = 0.5f;
     const float _invincibilityFlashTime = 0.1f;
     bool _invincible = false;
 

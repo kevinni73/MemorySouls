@@ -27,7 +27,7 @@ public class AttackButtons : MonoBehaviour
     [SerializeField] float _correctFlashTime = 0.05f;
     float _correctFlashTimer;
 
-    int _comboSize = 4;
+    int _comboSize = 3;
     List<int> _combo = new List<int>();
     int _comboIndex = 0;
 
@@ -51,8 +51,6 @@ public class AttackButtons : MonoBehaviour
         Input.onBottomButtonEvent += OnBottomButton;
         Input.onLeftButtonEvent += OnLeftButton;
         Input.onRightButtonEvent += OnRightButton;
-
-        _enemy.onEnemyDeadEvent += () => { Destroy(this.gameObject); };
     }
 
     void OnDestroy()
@@ -130,7 +128,7 @@ public class AttackButtons : MonoBehaviour
                 // combo completed
                 GenerateCombo();
                 _resetTimer = _resetTime;
-                _enemy.TakeDamage(10);
+                _enemy.TakeDamage(20);
                 break;
             }
 
@@ -149,7 +147,7 @@ public class AttackButtons : MonoBehaviour
         _comboIndex = 0;
     }
 
-    public void ChangeEnabled(bool enabled)
+    void ChangeEnabled(bool enabled)
     {
         _enabled = enabled;
         _resetTimer = 0;
@@ -176,6 +174,13 @@ public class AttackButtons : MonoBehaviour
                 button.Disable();
             }
         }
+    }
+
+    public void IncreaseComboSize()
+    {
+        _comboSize++;
+        _combo.Add(Random.Range(0, _comboSize));
+        Indicators.Init(_comboSize);
     }
 
     #region Input

@@ -13,7 +13,7 @@ public class DummyKnight : MonoBehaviour
     void Awake()
     {
         _enemyComponent = GetComponent<Enemy>();
-        _enemyComponent.onEnemyDeadEvent += Dead;
+        _enemyComponent.onTakeDamage += Dead;
     }
 
     void Dead()

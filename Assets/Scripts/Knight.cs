@@ -13,12 +13,15 @@ public class Knight : MonoBehaviour
 
     Enemy EnemyComponent;
 
-    bool _stopped = false;
+    bool _stopped;
+    bool _secondPhase;
 
     void Awake()
     {
         Swords = GetComponentsInChildren<Sword>();
         EnemyComponent = GetComponent<Enemy>();
+
+        EnemyComponent.onTakeDamage += onTakeDamage;
     }
 
     void Update()
@@ -47,6 +50,15 @@ public class Knight : MonoBehaviour
             Swords[_nextSwordIndex].Attack();
             _nextSwordIndex = (_nextSwordIndex + 1) % Swords.Length;
             _attackCooldownTimer = _attackCooldownTime;
+        }
+    }
+
+    void onTakeDamage()
+    {
+        if (!_secondPhase && EnemyComponent.Health <= EnemyComponent.MaxHealth / 2)
+        {
+            _secondPhase = true;
+            GetComponentInChildren<AttackButtons>().IncreaseComboSize();
         }
     }
 }

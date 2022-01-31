@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    public event Action onEnemyDeadEvent;
+    public event Action onTakeDamage;
 
     public HealthBar EnemyHealthBar;
     [SerializeField] int _health = 100;
@@ -15,36 +15,36 @@ public class Enemy : MonoBehaviour
         get => _health;
     }
 
+    public int MaxHealth;
+
     Animator _animator;
 
     void Awake()
     {
         _animator = GetComponent<Animator>();
+        MaxHealth = _health;
     }
 
     public void TakeDamage(int damage)
     {
         _health -= damage;
+
         if (EnemyHealthBar)
         {
             EnemyHealthBar.SetHealth(_health);
         }
 
-        if (_health <= 0)
+        if (onTakeDamage != null)
         {
-            if (onEnemyDeadEvent != null)
-            {
-                onEnemyDeadEvent();
-            }
+            onTakeDamage();
+        }
 
-            if (_animator != null)
+        if (_animator != null)
+        {
+            if (_health <= 0)
             {
                 _animator.SetTrigger("Dead");
-            }
-        }
-        else
-        {
-            if (_animator != null)
+            } else
             {
                 _animator.SetTrigger("Hurt");
             }

@@ -9,7 +9,7 @@ public class IndicatorManager : MonoBehaviour
 
     int _currentIndicatorIndex;
 
-    List<SpriteRenderer> _dotRenderers = new List<SpriteRenderer>();
+    List<SpriteRenderer> _dotRenderers;
 
     public void Init(int numDots)
     {
@@ -17,6 +17,8 @@ public class IndicatorManager : MonoBehaviour
         {
             Destroy(child.gameObject);
         }
+
+        _dotRenderers = new List<SpriteRenderer>();
 
         float leftMostOffset = -(numDots - 1) / 2.0f * _dotSpacing;
         for (int i = 0; i < numDots; i++)
@@ -28,6 +30,13 @@ public class IndicatorManager : MonoBehaviour
 
             dot.transform.parent = this.transform;
             dot.transform.position = new Vector3(dot.transform.position.x + leftMostOffset + i * _dotSpacing, dot.transform.position.y, dot.transform.position.z);
+        }
+
+        int lastIndex = _currentIndicatorIndex;
+        _currentIndicatorIndex = 0;
+        while (_currentIndicatorIndex != lastIndex)
+        {
+            Increment();
         }
     }
 
