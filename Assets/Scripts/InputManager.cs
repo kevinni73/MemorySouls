@@ -90,6 +90,11 @@ public class InputManager : MonoBehaviour
         }
     }
 
+    void OnExit()
+    {
+        Application.Quit();
+    }
+
     void OnControlsChanged(PlayerInput input)
     {
         if (onControlsChangedEvent == null)
