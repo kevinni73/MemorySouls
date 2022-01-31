@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Button : MonoBehaviour
@@ -14,18 +12,23 @@ public class Button : MonoBehaviour
         _renderer = GetComponent<SpriteRenderer>();
     }
 
-    public void SetRendererColor(Color color)
+    public void Disable()
     {
-        _renderer.color = color;
+        _renderer.enabled = false;
     }
 
     public void Enable()
+    {
+        _renderer.enabled = true;
+    }
+
+    public void Select()
     {
         _renderer.sprite = _xboxSprite;
         _renderer.color = Color.white;
     }
 
-    public void Disable()
+    public void Deselect()
     {
         _renderer.sprite = _xboxSprite;
         _renderer.color = Color.gray;

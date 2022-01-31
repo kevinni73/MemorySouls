@@ -38,7 +38,7 @@ public class Player : MonoBehaviour
     bool _invincible = false;
 
     // Health
-    public HealthBar PlayerHealthBar;
+    [SerializeField] HealthBar PlayerHealthBar;
     int _health = 100;
 
     // Other components
@@ -74,6 +74,10 @@ public class Player : MonoBehaviour
         _stateMachine.AddState((int)State.Normal, NormalUpdate, null, null, null);
         _stateMachine.AddState((int)State.Roll, null, RollCoroutine, RollBegin, RollEnd);
         _stateMachine.AddState((int)State.Damaged, null, DamagedCoroutine, DamagedBegin, DamagedEnd);
+
+        InputManager input = FindObjectOfType<InputManager>();
+        input.onMoveEvent += OnMove;
+        input.onRollEvent += OnRoll;
     }
 
     void Update()
@@ -185,7 +189,6 @@ public class Player : MonoBehaviour
             _rolled = true;
         }
     }
-
     #endregion
 
 
@@ -201,7 +204,11 @@ public class Player : MonoBehaviour
         if (_stateMachine.State != (int)State.Damaged)
         {
             _health -= damage;
-            PlayerHealthBar.SetHealth(_health);
+            if (PlayerHealthBar)
+            {
+                PlayerHealthBar.SetHealth(_health);
+            }
+            
             _knockbackDir = knockback;
             _stateMachine.State = (int)State.Damaged;
         }

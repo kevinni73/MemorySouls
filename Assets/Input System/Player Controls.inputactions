@@ -1,5 +1,5 @@
 {
-    "name": "Movement Controls",
+    "name": "Player Controls",
     "maps": [
         {
             "name": "Player",
@@ -18,6 +18,42 @@
                     "name": "Roll",
                     "type": "Button",
                     "id": "382aec2b-a93e-4df8-acb8-7c7e9dc0291c",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "TopButton",
+                    "type": "Button",
+                    "id": "f3e673f5-d4e5-427e-8bcd-de801ae1be89",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "BottomButton",
+                    "type": "Button",
+                    "id": "89a720ac-f40d-4d9b-be69-03d21021e6d4",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "LeftButton",
+                    "type": "Button",
+                    "id": "badd3def-fdde-444f-b8c0-2bffec7c72ae",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "RightButton",
+                    "type": "Button",
+                    "id": "1f33e755-a32c-42a7-9be4-520cdd030c3b",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -53,7 +89,7 @@
                     "path": "<Keyboard>/w",
                     "interactions": "",
                     "processors": "",
-                    "groups": ";Keyboard&Mouse",
+                    "groups": ";Keyboard",
                     "action": "Move",
                     "isComposite": false,
                     "isPartOfComposite": true
@@ -64,7 +100,7 @@
                     "path": "<Keyboard>/s",
                     "interactions": "",
                     "processors": "",
-                    "groups": ";Keyboard&Mouse",
+                    "groups": ";Keyboard",
                     "action": "Move",
                     "isComposite": false,
                     "isPartOfComposite": true
@@ -75,7 +111,7 @@
                     "path": "<Keyboard>/a",
                     "interactions": "",
                     "processors": "",
-                    "groups": ";Keyboard&Mouse",
+                    "groups": ";Keyboard",
                     "action": "Move",
                     "isComposite": false,
                     "isPartOfComposite": true
@@ -86,7 +122,7 @@
                     "path": "<Keyboard>/d",
                     "interactions": "",
                     "processors": "",
-                    "groups": ";Keyboard&Mouse",
+                    "groups": ";Keyboard",
                     "action": "Move",
                     "isComposite": false,
                     "isPartOfComposite": true
@@ -104,23 +140,100 @@
                 },
                 {
                     "name": "",
-                    "id": "05f6913d-c316-48b2-a6bb-e225f14c7960",
-                    "path": "<Mouse>/leftButton",
+                    "id": "866f7637-e892-4a20-a1af-28304b579dc3",
+                    "path": "<Keyboard>/space",
                     "interactions": "",
                     "processors": "",
-                    "groups": ";Keyboard&Mouse",
+                    "groups": "Keyboard",
                     "action": "Roll",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
-                    "id": "866f7637-e892-4a20-a1af-28304b579dc3",
-                    "path": "<Keyboard>/space",
+                    "id": "93919624-4e9b-4f00-8a57-10ee5c0ed3b1",
+                    "path": "<Gamepad>/buttonNorth",
                     "interactions": "",
                     "processors": "",
-                    "groups": "Keyboard&Mouse",
-                    "action": "Roll",
+                    "groups": "Controller;Gamepad",
+                    "action": "TopButton",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "263cbd36-6ee0-4b77-a63a-48be2aa3bd61",
+                    "path": "<Keyboard>/upArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard;Keyboard",
+                    "action": "TopButton",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "8bee3960-fc08-4225-991e-d17dc56c0b7a",
+                    "path": "<Gamepad>/buttonSouth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Controller;Gamepad",
+                    "action": "BottomButton",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "138ad19d-2417-4e5e-9010-5875e6612372",
+                    "path": "<Keyboard>/downArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard;Keyboard",
+                    "action": "BottomButton",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "39a6b34f-62c5-4a6d-a00f-8e1a589b373b",
+                    "path": "<Gamepad>/buttonWest",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Controller;Gamepad",
+                    "action": "LeftButton",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "8e0bf213-1986-40d0-8691-30657ab7d96c",
+                    "path": "<Keyboard>/leftArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard;Keyboard",
+                    "action": "LeftButton",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "297cba10-246d-4001-ab26-01039302a633",
+                    "path": "<Gamepad>/buttonEast",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Controller;Gamepad",
+                    "action": "RightButton",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "205f4e26-9f62-4290-b230-04f328531a56",
+                    "path": "<Keyboard>/rightArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard;Keyboard",
+                    "action": "RightButton",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
@@ -404,7 +517,7 @@
                     "path": "<Keyboard>/w",
                     "interactions": "",
                     "processors": "",
-                    "groups": "Keyboard&Mouse",
+                    "groups": "Keyboard",
                     "action": "Navigate",
                     "isComposite": false,
                     "isPartOfComposite": true
@@ -415,7 +528,7 @@
                     "path": "<Keyboard>/upArrow",
                     "interactions": "",
                     "processors": "",
-                    "groups": "Keyboard&Mouse",
+                    "groups": "Keyboard",
                     "action": "Navigate",
                     "isComposite": false,
                     "isPartOfComposite": true
@@ -426,7 +539,7 @@
                     "path": "<Keyboard>/s",
                     "interactions": "",
                     "processors": "",
-                    "groups": "Keyboard&Mouse",
+                    "groups": "Keyboard",
                     "action": "Navigate",
                     "isComposite": false,
                     "isPartOfComposite": true
@@ -437,7 +550,7 @@
                     "path": "<Keyboard>/downArrow",
                     "interactions": "",
                     "processors": "",
-                    "groups": "Keyboard&Mouse",
+                    "groups": "Keyboard",
                     "action": "Navigate",
                     "isComposite": false,
                     "isPartOfComposite": true
@@ -448,7 +561,7 @@
                     "path": "<Keyboard>/a",
                     "interactions": "",
                     "processors": "",
-                    "groups": "Keyboard&Mouse",
+                    "groups": "Keyboard",
                     "action": "Navigate",
                     "isComposite": false,
                     "isPartOfComposite": true
@@ -459,7 +572,7 @@
                     "path": "<Keyboard>/leftArrow",
                     "interactions": "",
                     "processors": "",
-                    "groups": "Keyboard&Mouse",
+                    "groups": "Keyboard",
                     "action": "Navigate",
                     "isComposite": false,
                     "isPartOfComposite": true
@@ -470,7 +583,7 @@
                     "path": "<Keyboard>/d",
                     "interactions": "",
                     "processors": "",
-                    "groups": "Keyboard&Mouse",
+                    "groups": "Keyboard",
                     "action": "Navigate",
                     "isComposite": false,
                     "isPartOfComposite": true
@@ -481,7 +594,7 @@
                     "path": "<Keyboard>/rightArrow",
                     "interactions": "",
                     "processors": "",
-                    "groups": "Keyboard&Mouse",
+                    "groups": "Keyboard",
                     "action": "Navigate",
                     "isComposite": false,
                     "isPartOfComposite": true
@@ -514,7 +627,7 @@
                     "path": "<Mouse>/position",
                     "interactions": "",
                     "processors": "",
-                    "groups": "Keyboard&Mouse",
+                    "groups": "Keyboard",
                     "action": "Point",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -525,7 +638,7 @@
                     "path": "<Pen>/position",
                     "interactions": "",
                     "processors": "",
-                    "groups": "Keyboard&Mouse",
+                    "groups": "Keyboard",
                     "action": "Point",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -547,7 +660,7 @@
                     "path": "<Mouse>/leftButton",
                     "interactions": "",
                     "processors": "",
-                    "groups": ";Keyboard&Mouse",
+                    "groups": ";Keyboard",
                     "action": "Click",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -558,7 +671,7 @@
                     "path": "<Pen>/tip",
                     "interactions": "",
                     "processors": "",
-                    "groups": ";Keyboard&Mouse",
+                    "groups": ";Keyboard",
                     "action": "Click",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -591,7 +704,7 @@
                     "path": "<Mouse>/scroll",
                     "interactions": "",
                     "processors": "",
-                    "groups": ";Keyboard&Mouse",
+                    "groups": ";Keyboard",
                     "action": "ScrollWheel",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -602,7 +715,7 @@
                     "path": "<Mouse>/middleButton",
                     "interactions": "",
                     "processors": "",
-                    "groups": ";Keyboard&Mouse",
+                    "groups": ";Keyboard",
                     "action": "MiddleClick",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -613,7 +726,7 @@
                     "path": "<Mouse>/rightButton",
                     "interactions": "",
                     "processors": "",
-                    "groups": ";Keyboard&Mouse",
+                    "groups": ";Keyboard",
                     "action": "RightClick",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -645,16 +758,11 @@
     ],
     "controlSchemes": [
         {
-            "name": "Keyboard&Mouse",
-            "bindingGroup": "Keyboard&Mouse",
+            "name": "Keyboard",
+            "bindingGroup": "Keyboard",
             "devices": [
                 {
                     "devicePath": "<Keyboard>",
-                    "isOptional": false,
-                    "isOR": false
-                },
-                {
-                    "devicePath": "<Mouse>",
                     "isOptional": false,
                     "isOR": false
                 }

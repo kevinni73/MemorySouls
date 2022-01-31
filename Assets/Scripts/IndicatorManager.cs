@@ -56,4 +56,20 @@ public class IndicatorManager : MonoBehaviour
             _dotRenderers[i].color = Color.red;
         }
     }
+
+    public void Enable()
+    {
+        foreach (SpriteRenderer renderer in _dotRenderers)
+        {
+            renderer.enabled = true;
+        }
+    }
+
+    public void Disable()
+    {
+        foreach (SpriteRenderer renderer in _dotRenderers)
+        {
+            renderer.enabled = false;
+        }
+    }
 }

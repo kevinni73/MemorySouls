@@ -1,9 +1,13 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
+    public event Action onEnemyDeadEvent;
+
+    [SerializeField] HealthBar EnemyHealthBar;
     int _health = 100;
 
     public int Health
@@ -21,8 +25,23 @@ public class Enemy : MonoBehaviour
     public void TakeDamage(int damage)
     {
         _health -= damage;
-        _animator.SetTrigger("Hurt");
+        if (EnemyHealthBar)
+        {
+            EnemyHealthBar.SetHealth(_health);
+        }
 
-        Debug.Log("Enemy health: " + _health);
+        if (_health <= 0)
+        {
+            if (onEnemyDeadEvent != null)
+            {
+                onEnemyDeadEvent();
+            }
+
+            _animator.SetTrigger("Dead");
+        }
+        else
+        {
+            _animator.SetTrigger("Hurt");
+        }
     }
 }

@@ -7,10 +7,13 @@ public class Knight : MonoBehaviour
     [SerializeField] float _attackCooldownTime = 2f;
     float _attackCooldownTimer;
 
+    [SerializeField] GameObject DummySwordPrefab;
     Sword[] Swords;
     int _nextSwordIndex = 0;
 
     Enemy EnemyComponent;
+
+    bool _stopped = false;
 
     void Awake()
     {
@@ -22,6 +25,15 @@ public class Knight : MonoBehaviour
     {
         if (EnemyComponent.Health <= 0)
         {
+            if (!_stopped)
+            {
+                _stopped = true;
+                foreach (Sword sword in Swords)
+                {
+                    var dummySword = Instantiate(DummySwordPrefab, sword.transform.position, sword.transform.rotation);
+                    Destroy(sword.gameObject);
+                }
+            }
             return;
         }
 
