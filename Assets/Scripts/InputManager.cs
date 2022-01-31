@@ -6,6 +6,8 @@ using UnityEngine.InputSystem;
 
 public class InputManager : MonoBehaviour
 {
+    public static InputManager instance;
+
     public enum Controls
     {
         Keyboard,
@@ -20,6 +22,25 @@ public class InputManager : MonoBehaviour
     public event Action onLeftButtonEvent;
     public event Action onRightButtonEvent;
     public event Action<Controls> onControlsChangedEvent;
+
+    private Controls _currentControls = Controls.Keyboard;
+    public Controls CurrentControls
+    {
+        get => _currentControls;
+    }
+
+    void Awake()
+    {
+        if (instance != null && instance != this)
+        {
+            Destroy(this.gameObject);
+        }
+        else
+        {
+            instance = this;
+            DontDestroyOnLoad(this.gameObject);
+        }
+    }
 
     void OnMove(InputValue value)
     {
@@ -78,18 +99,22 @@ public class InputManager : MonoBehaviour
 
         if (input.currentControlScheme == "Keyboard")
         {
-            onControlsChangedEvent(Controls.Keyboard);
-        } else if (input.currentControlScheme == "Gamepad")
+            _currentControls = Controls.Keyboard;
+        }
+        else if (input.currentControlScheme == "Gamepad")
         {
             Gamepad currentGamepad = UnityEngine.InputSystem.Gamepad.current;
             if (currentGamepad is UnityEngine.InputSystem.XInput.XInputController)
             {
-                onControlsChangedEvent(Controls.Xbox);
+                _currentControls = Controls.Xbox;
+
             }
             else if (currentGamepad is UnityEngine.InputSystem.DualShock.DualShockGamepad)
             {
-                onControlsChangedEvent(Controls.Playstation);
+                _currentControls = Controls.Playstation;
             }
         }
+
+        onControlsChangedEvent(CurrentControls);
     }
 }

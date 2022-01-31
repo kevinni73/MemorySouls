@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Button : MonoBehaviour
+public class AttackButton : MonoBehaviour
 {
     SpriteRenderer _renderer;
 
@@ -16,11 +16,20 @@ public class Button : MonoBehaviour
     Sprite _normalSprite;
     Sprite _altSprite;
 
+    InputManager Input;
+
     void Awake()
     {
         _renderer = GetComponent<SpriteRenderer>();
-        FindObjectOfType<InputManager>().onControlsChangedEvent += onControlsChanged;
-        onControlsChanged(InputManager.Controls.Keyboard);
+
+        Input = FindObjectOfType<InputManager>();
+        Input.onControlsChangedEvent += onControlsChanged;
+        onControlsChanged(Input.CurrentControls);
+    }
+
+    void OnDestroy()
+    {
+        Input.onControlsChangedEvent -= onControlsChanged;
     }
 
     private void onControlsChanged(InputManager.Controls controls)

@@ -13,11 +13,11 @@ public class AttackButtons : MonoBehaviour
     }
     Queue<ButtonIndex> _buttonPresses = new Queue<ButtonIndex>();
 
-    [SerializeField] Button TopButton;
-    [SerializeField] Button BottomButton;
-    [SerializeField] Button LeftButton;
-    [SerializeField] Button RightButton;
-    List<Button> _buttons;
+    [SerializeField] AttackButton TopButton;
+    [SerializeField] AttackButton BottomButton;
+    [SerializeField] AttackButton LeftButton;
+    [SerializeField] AttackButton RightButton;
+    List<AttackButton> _buttons;
 
     [SerializeField] Enemy _enemy;
 
@@ -36,21 +36,31 @@ public class AttackButtons : MonoBehaviour
 
     bool _enabled;
 
+    InputManager Input;
+
     void Awake()
     {
         Indicators = GetComponentInChildren<IndicatorManager>();
         Indicators.Init(_comboSize);
 
         // For convenient accessing buttons by index, make sure it matches ButtonIndex order
-        _buttons = new List<Button> { TopButton, BottomButton, LeftButton, RightButton };
+        _buttons = new List<AttackButton> { TopButton, BottomButton, LeftButton, RightButton };
 
-        InputManager input = FindObjectOfType<InputManager>();
-        input.onTopButtonEvent += OnTopButton;
-        input.onBottomButtonEvent += OnBottomButton;
-        input.onLeftButtonEvent += OnLeftButton;
-        input.onRightButtonEvent += OnRightButton;
+        Input = FindObjectOfType<InputManager>();
+        Input.onTopButtonEvent += OnTopButton;
+        Input.onBottomButtonEvent += OnBottomButton;
+        Input.onLeftButtonEvent += OnLeftButton;
+        Input.onRightButtonEvent += OnRightButton;
 
         _enemy.onEnemyDeadEvent += () => { Destroy(this.gameObject); };
+    }
+
+    void OnDestroy()
+    {
+        Input.onTopButtonEvent -= OnTopButton;
+        Input.onBottomButtonEvent -= OnBottomButton;
+        Input.onLeftButtonEvent -= OnLeftButton;
+        Input.onRightButtonEvent -= OnRightButton;
     }
 
     void Start()
@@ -120,7 +130,7 @@ public class AttackButtons : MonoBehaviour
                 // combo completed
                 GenerateCombo();
                 _resetTimer = _resetTime;
-                _enemy.TakeDamage(100);
+                _enemy.TakeDamage(10);
                 break;
             }
 
@@ -150,7 +160,7 @@ public class AttackButtons : MonoBehaviour
         {
             Indicators.Clear();
             Indicators.Enable();
-            foreach (Button button in _buttons)
+            foreach (AttackButton button in _buttons)
             {
                 button.Deselect();
                 button.Enable();
@@ -161,7 +171,7 @@ public class AttackButtons : MonoBehaviour
         else
         {
             Indicators.Disable();
-            foreach (Button button in _buttons)
+            foreach (AttackButton button in _buttons)
             {
                 button.Disable();
             }
@@ -169,7 +179,7 @@ public class AttackButtons : MonoBehaviour
     }
 
     #region Input
-    public void OnTopButton()
+    void OnTopButton()
     {
         if (_enabled)
         {
@@ -177,7 +187,7 @@ public class AttackButtons : MonoBehaviour
         }
     }
 
-    public void OnBottomButton()
+    void OnBottomButton()
     {
         if (_enabled)
         {
@@ -185,7 +195,7 @@ public class AttackButtons : MonoBehaviour
         }
     }
 
-    public void OnLeftButton()
+    void OnLeftButton()
     {
         if (_enabled)
         {
@@ -193,7 +203,7 @@ public class AttackButtons : MonoBehaviour
         }
     }
 
-    public void OnRightButton()
+    void OnRightButton()
     {
         if (_enabled)
         {

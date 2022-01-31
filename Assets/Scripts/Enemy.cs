@@ -7,8 +7,8 @@ public class Enemy : MonoBehaviour
 {
     public event Action onEnemyDeadEvent;
 
-    [SerializeField] HealthBar EnemyHealthBar;
-    int _health = 100;
+    public HealthBar EnemyHealthBar;
+    [SerializeField] int _health = 100;
 
     public int Health
     {
@@ -37,11 +37,17 @@ public class Enemy : MonoBehaviour
                 onEnemyDeadEvent();
             }
 
-            _animator.SetTrigger("Dead");
+            if (_animator != null)
+            {
+                _animator.SetTrigger("Dead");
+            }
         }
         else
         {
-            _animator.SetTrigger("Hurt");
+            if (_animator != null)
+            {
+                _animator.SetTrigger("Hurt");
+            }
         }
     }
 }
