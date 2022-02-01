@@ -1,9 +1,11 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class AttackButtons : MonoBehaviour
 {
+    #region Variables
+
+    // Buttons
     private enum ButtonIndex
     {
         Top,
@@ -11,37 +13,43 @@ public class AttackButtons : MonoBehaviour
         Left,
         Right,
     }
-    Queue<ButtonIndex> _buttonPresses = new Queue<ButtonIndex>();
-
     [SerializeField] AttackButton TopButton;
     [SerializeField] AttackButton BottomButton;
     [SerializeField] AttackButton LeftButton;
     [SerializeField] AttackButton RightButton;
+    Queue<ButtonIndex> _buttonPresses = new Queue<ButtonIndex>();
     List<AttackButton> _buttons;
 
-    [SerializeField] Enemy _enemy;
-
+    // Timers
     [SerializeField] float _resetTime = 0.05f;
     float _resetTimer;
-
     [SerializeField] float _correctFlashTime = 0.05f;
     float _correctFlashTimer;
 
+    // Combo
     int _comboSize = 3;
     List<int> _combo = new List<int>();
     int _comboIndex = 0;
 
-    IndicatorManager Indicators;
-    List<SpriteRenderer> _childRenderers;
-
-    bool _enabled;
+    Enemy Enemy;
+    Player Player;
 
     InputManager Input;
+    IndicatorManager Indicators;
+    List<SpriteRenderer> _childRenderers;
+    
+    bool _enabled;
 
+    #endregion
+
+    #region Monobehavior
     void Awake()
     {
         Indicators = GetComponentInChildren<IndicatorManager>();
         Indicators.Init(_comboSize);
+
+        Enemy = GetComponentInParent<Enemy>();
+        Player = FindObjectOfType<Player>();
 
         // For convenient accessing buttons by index, make sure it matches ButtonIndex order
         _buttons = new List<AttackButton> { TopButton, BottomButton, LeftButton, RightButton };
@@ -64,7 +72,7 @@ public class AttackButtons : MonoBehaviour
     void Start()
     {
         _childRenderers = new List<SpriteRenderer>(GetComponentsInChildren<SpriteRenderer>());
-        ChangeEnabled(false);
+        Reset(false);
 
         GenerateCombo();
     }
@@ -81,7 +89,7 @@ public class AttackButtons : MonoBehaviour
             _resetTimer -= Time.deltaTime;
             if (_resetTimer <= 0)
             {
-                ChangeEnabled(true);
+                Reset(true);
             }
 
             return;
@@ -104,17 +112,18 @@ public class AttackButtons : MonoBehaviour
             if (_comboIndex != _combo.Count)
             {
                 int i = (int)_buttonPresses.Peek();
+
+                // correct press
                 if (i == _combo[_comboIndex])
                 {
-                    // correct press
                     _buttons[i].Correct();
                     Indicators.Increment();
                     _comboIndex++;
                     _correctFlashTimer = _correctFlashTime;
                 }
+                // incorrect press
                 else
                 {
-                    // incorrect press
                     _comboIndex = 0;
                     Indicators.Incorrect();
                     _buttons[i].Incorrect();
@@ -123,12 +132,12 @@ public class AttackButtons : MonoBehaviour
                 }
             }
 
+            // combo completed
             if (_comboIndex == _combo.Count)
             {
-                // combo completed
                 GenerateCombo();
                 _resetTimer = _resetTime;
-                _enemy.TakeDamage(20);
+                Enemy.TakeDamage(Player.AttackDamage);
                 break;
             }
 
@@ -136,6 +145,10 @@ public class AttackButtons : MonoBehaviour
         }
         _buttonPresses.Clear();
     }
+
+    #endregion
+
+    #region Private Methods
 
     void GenerateCombo()
     {
@@ -147,7 +160,7 @@ public class AttackButtons : MonoBehaviour
         _comboIndex = 0;
     }
 
-    void ChangeEnabled(bool enabled)
+    void Reset(bool enabled)
     {
         _enabled = enabled;
         _resetTimer = 0;
@@ -176,12 +189,16 @@ public class AttackButtons : MonoBehaviour
         }
     }
 
+    #endregion
+
+    #region Public Methods
     public void IncreaseComboSize()
     {
         _comboSize++;
         _combo.Add(Random.Range(0, _comboSize));
         Indicators.Init(_comboSize);
     }
+    #endregion
 
     #region Input
     void OnTopButton()
@@ -217,13 +234,13 @@ public class AttackButtons : MonoBehaviour
     }
     #endregion
 
-    #region Trigger
+    #region Triggers
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
         {
-            ChangeEnabled(true);
+            Reset(true);
         }
     }
 
@@ -231,7 +248,7 @@ public class AttackButtons : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            ChangeEnabled(false);
+            Reset(false);
         }
     }
 

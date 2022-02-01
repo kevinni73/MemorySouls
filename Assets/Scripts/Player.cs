@@ -1,6 +1,5 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
@@ -43,6 +42,9 @@ public class Player : MonoBehaviour
     // Health
     [SerializeField] HealthBar PlayerHealthBar;
     int _health = 100;
+
+    // Damage
+    public int AttackDamage = 10;
 
     // Other components
     SpriteRenderer _renderer;
@@ -124,7 +126,7 @@ public class Player : MonoBehaviour
 
     void RollBegin()
     {
-        _animator.SetFloat("RollDir", DirectionToAngleRange01(_rollDir));
+        _animator.SetFloat("RollDir", DirectionToAngleRange0To1(_rollDir));
         _animator.SetBool("Rolling", true);
         _velocity = _rollDir.normalized * _rollSpeed;
         _invincible = true;
@@ -168,8 +170,8 @@ public class Player : MonoBehaviour
 
     #endregion
 
-    #region Dead State
 
+    #region Dead State
     IEnumerator DeadCoroutine()
     {
         Time.timeScale = 0;
@@ -178,11 +180,10 @@ public class Player : MonoBehaviour
         Time.timeScale = 1;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
-
     #endregion
 
-    #region Inputs
 
+    #region Inputs
     void OnMove(InputValue value)
     {
         _moveInput = value.Get<Vector2>();
@@ -190,10 +191,8 @@ public class Player : MonoBehaviour
         if (_moveInput != Vector2.zero)
         {
             _lastDir = _moveInput.normalized;
-            _lastDirectionFloat = DirectionToAngleRange01(_moveInput);
+            _lastDirectionFloat = DirectionToAngleRange0To1(_moveInput);
         }
-
-        //Debug.Log(_moveInput);
     }
 
     void OnRoll(InputValue value)
@@ -207,8 +206,7 @@ public class Player : MonoBehaviour
     #endregion
 
 
-    #region Public Player API
-
+    #region Public Methods
     public void TakeDamage(int damage, Vector2 knockback)
     {
         if (_invincible)
@@ -234,15 +232,13 @@ public class Player : MonoBehaviour
             _stateMachine.State = (int)State.Damaged;
         }
     }
-
     #endregion
 
 
-    #region Private Player Methods
-
+    #region Private Methods
     // Gets the angle of a vector and transform it to a range of [0, 1),
     // starting from Vector.right and going counterclockwise
-    float DirectionToAngleRange01(Vector2 direction)
+    float DirectionToAngleRange0To1(Vector2 direction)
     {
         float angle = Mathf.Atan2(direction.y, direction.x) / (Mathf.PI * 2);
         if (angle < 0)

@@ -2,8 +2,6 @@ using UnityEngine;
 
 public class AttackButton : MonoBehaviour
 {
-    SpriteRenderer _renderer;
-
     [SerializeField] Sprite _xboxSprite;
     [SerializeField] Sprite _xboxAltSprite;
 
@@ -13,11 +11,13 @@ public class AttackButton : MonoBehaviour
     [SerializeField] Sprite _playstationSprite;
     [SerializeField] Sprite _playstationAltSprite;
 
+    SpriteRenderer _renderer;
     Sprite _normalSprite;
     Sprite _altSprite;
 
     InputManager Input;
 
+    #region Monobehavior
     void Awake()
     {
         _renderer = GetComponent<SpriteRenderer>();
@@ -31,6 +31,7 @@ public class AttackButton : MonoBehaviour
     {
         Input.onControlsChangedEvent -= onControlsChanged;
     }
+    #endregion
 
     private void onControlsChanged(InputManager.Controls controls)
     {
@@ -53,6 +54,7 @@ public class AttackButton : MonoBehaviour
         _renderer.sprite = _normalSprite;
     }
 
+    #region Public Methods
     public void Disable()
     {
         _renderer.enabled = false;
@@ -85,4 +87,5 @@ public class AttackButton : MonoBehaviour
     {
         _renderer.sprite = _altSprite;
     }
+    #endregion
 }

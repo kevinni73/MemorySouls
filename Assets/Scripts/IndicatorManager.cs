@@ -1,27 +1,26 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class IndicatorManager : MonoBehaviour
 {
     [SerializeField] GameObject IndicatorDot;
-    [SerializeField] float _dotSpacing = 0.1f;
 
+    const float kDotSpacing = 0.2f;
+    List<SpriteRenderer> _dotRenderers;
     int _currentIndicatorIndex;
 
-    List<SpriteRenderer> _dotRenderers;
-
-    public void Init(int numDots)
+    public void Init(int size)
     {
         foreach (Transform child in transform)
         {
+            // start fresh in case number of indicators changes
             Destroy(child.gameObject);
         }
 
         _dotRenderers = new List<SpriteRenderer>();
 
-        float leftMostOffset = -(numDots - 1) / 2.0f * _dotSpacing;
-        for (int i = 0; i < numDots; i++)
+        float leftMostOffset = -(size - 1) / 2.0f * kDotSpacing;
+        for (int i = 0; i < size; i++)
         {
             GameObject dot = Instantiate(IndicatorDot, transform.position, Quaternion.identity);
             SpriteRenderer dotRenderer = dot.GetComponent<SpriteRenderer>();
@@ -29,9 +28,10 @@ public class IndicatorManager : MonoBehaviour
             _dotRenderers.Add(dotRenderer);
 
             dot.transform.parent = this.transform;
-            dot.transform.position = new Vector3(dot.transform.position.x + leftMostOffset + i * _dotSpacing, dot.transform.position.y, dot.transform.position.z);
+            dot.transform.position = new Vector3(dot.transform.position.x + leftMostOffset + i * kDotSpacing, dot.transform.position.y, dot.transform.position.z);
         }
 
+        // recover previous state of indicators
         int lastIndex = _currentIndicatorIndex;
         _currentIndicatorIndex = 0;
         while (_currentIndicatorIndex != lastIndex)

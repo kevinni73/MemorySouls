@@ -4,21 +4,21 @@ using UnityEngine;
 
 public class Knight : MonoBehaviour
 {
+    // replace swords on death
+    [SerializeField] GameObject DummySwordPrefab;
+
     [SerializeField] float _attackCooldownTime = 2f;
     float _attackCooldownTimer;
 
-    [SerializeField] GameObject DummySwordPrefab;
-    Sword[] Swords;
+    Enemy EnemyComponent;
+    List<Sword> Swords;
     int _nextSwordIndex = 0;
 
-    Enemy EnemyComponent;
-
-    bool _stopped;
     bool _secondPhase;
 
     void Awake()
     {
-        Swords = GetComponentsInChildren<Sword>();
+        Swords = new List<Sword>(GetComponentsInChildren<Sword>());
         EnemyComponent = GetComponent<Enemy>();
 
         EnemyComponent.onTakeDamage += onTakeDamage;
@@ -26,29 +26,15 @@ public class Knight : MonoBehaviour
 
     void Update()
     {
-        if (EnemyComponent.Health <= 0)
-        {
-            if (!_stopped)
-            {
-                _stopped = true;
-                foreach (Sword sword in Swords)
-                {
-                    var dummySword = Instantiate(DummySwordPrefab, sword.transform.position, sword.transform.rotation);
-                    Destroy(sword.gameObject);
-                }
-            }
-            return;
-        }
-
         if (_attackCooldownTimer > 0)
         {
             _attackCooldownTimer -= Time.deltaTime;
         }
 
-        if (Swords.Length > 0 && Swords[_nextSwordIndex].AttackReady && _attackCooldownTimer <= 0)
+        if (Swords.Count > 0 && Swords[_nextSwordIndex].AttackReady && _attackCooldownTimer <= 0)
         {
             Swords[_nextSwordIndex].Attack();
-            _nextSwordIndex = (_nextSwordIndex + 1) % Swords.Length;
+            _nextSwordIndex = (_nextSwordIndex + 1) % Swords.Count;
             _attackCooldownTimer = _attackCooldownTime;
         }
     }
@@ -59,6 +45,15 @@ public class Knight : MonoBehaviour
         {
             _secondPhase = true;
             GetComponentInChildren<AttackButtons>().IncreaseComboSize();
+        }
+        else if (EnemyComponent.Health <= 0)
+        {
+            foreach (Sword sword in Swords)
+            {
+                var dummySword = Instantiate(DummySwordPrefab, sword.transform.position, sword.transform.rotation);
+                Destroy(sword.gameObject);
+            }
+            Swords.Clear();
         }
     }
 }

@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Enemy : MonoBehaviour
@@ -9,12 +7,10 @@ public class Enemy : MonoBehaviour
 
     public HealthBar EnemyHealthBar;
     [SerializeField] int _health = 100;
-
     public int Health
     {
         get => _health;
     }
-
     public int MaxHealth;
 
     Animator _animator;

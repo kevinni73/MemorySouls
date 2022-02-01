@@ -1,14 +1,14 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class DummyKnight : MonoBehaviour
 {
-    Enemy _enemyComponent;
     [SerializeField] List<GameObject> ObjectsToEnable;
     [SerializeField] List<GameObject> ObjectsToDestroy;
 
     [SerializeField] GameObject _replacementPrefab;
+
+    Enemy _enemyComponent;
 
     void Awake()
     {

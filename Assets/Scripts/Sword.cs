@@ -1,38 +1,39 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Sword : MonoBehaviour
 {
-    private enum State
-    {
-        Waiting,
-        Targeting,
-        Moving,
-    };
+    #region Variables
 
     [SerializeField] float _rotationSpeed = 6f;
     [SerializeField] float _moveSpeed = 100f;
 
     [SerializeField] float _waitTime = 1f;
     [SerializeField] float _flashTime = 0.1f;
-
-    float travelDistance;
-
-    public Vector2 _velocity;
+    [SerializeField] Color _flashColor;
 
     StateMachine _stateMachine;
     Rigidbody2D _rb;
     SpriteRenderer _renderer;
-
-    [SerializeField] Color _flashColor;
-
     GameObject Player;
 
+    Vector2 _velocity;
+    float _travelDistance;
     public bool AttackReady = false;
     bool _attack = false;
+    #endregion
 
+    #region Internal Types
+    private enum State
+    {
+        Waiting,
+        Targeting,
+        Moving,
+    };
+    #endregion
+
+    #region Monobehavior
     void Awake()
     {
         _rb = GetComponent<Rigidbody2D>();
@@ -47,22 +48,26 @@ public class Sword : MonoBehaviour
         _stateMachine.AddState((int)State.Moving, MovingUpdate, null, MovingBegin, MovingEnd);
     }
 
-    private void FixedUpdate()
+    void FixedUpdate()
     {
         Vector2 velocity = _velocity * Time.fixedDeltaTime;
-        if (travelDistance > 0)
+        if (_travelDistance > 0)
         {
-            travelDistance -= velocity.magnitude;
+            _travelDistance -= velocity.magnitude;
         }
         _rb.MovePosition(_rb.position + velocity);
     }
+    #endregion
 
+    #region Waiting State
     IEnumerator WaitingCoroutine()
     {
         yield return new WaitForSeconds(_waitTime);
         _stateMachine.State = (int)State.Targeting;
     }
+    #endregion
 
+    #region Targeting State
     int TargetingUpdate()
     {
         if (_attack)
@@ -93,11 +98,13 @@ public class Sword : MonoBehaviour
         _renderer.color = Color.white;
         _stateMachine.State = (int)State.Moving;
     }
+    #endregion
 
+    #region Moving State
     void MovingBegin()
     {
         Vector2 vectorToTarget = Player.transform.position - transform.position;
-        travelDistance = vectorToTarget.magnitude;
+        _travelDistance = vectorToTarget.magnitude;
         _velocity = vectorToTarget.normalized * _moveSpeed;
     }
 
@@ -108,16 +115,19 @@ public class Sword : MonoBehaviour
 
     int MovingUpdate()
     {
-        if (travelDistance <= 0)
+        if (_travelDistance <= 0)
         {
             return (int)State.Waiting;
         }
 
         return (int)State.Moving;
     }
+    #endregion
 
+    #region Public Methods
     public void Attack()
     {
         _attack = true;
     }
+    #endregion
 }

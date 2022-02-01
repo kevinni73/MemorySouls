@@ -1,15 +1,14 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+[RequireComponent(typeof(Image))]
 public class ButtonImage : MonoBehaviour
 {
-    Image _image;
-
     [SerializeField] Sprite _xboxSprite;
     [SerializeField] Sprite _keyboardSprite;
     [SerializeField] Sprite _playstationSprite;
+
+    Image _image;
 
     InputManager Input;
 
