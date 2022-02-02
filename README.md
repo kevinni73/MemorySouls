@@ -13,7 +13,7 @@ Controller recommended
 ## How to Play
 - Browser: https://kevinni73.github.io/MemorySouls/
     - note: the WebGL build can't detect input device changes, will always display Xbox controls
-- Windows PC: Unzip "Memory Souls Windows Build.zip" in the Builds/ folder and run "Memory Souls.exe"
+- Windows PC: Unzip "Memory Souls Windows Build.zip" in the /Build folder and run "Memory Souls.exe"
 
 ## Screenshots
 ![](Screenshots/game.png)
