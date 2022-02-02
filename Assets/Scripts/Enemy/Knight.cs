@@ -10,6 +10,7 @@ public class Knight : MonoBehaviour
     [SerializeField] float _attackCooldownTime = 2f;
     float _attackCooldownTimer;
 
+    Animator _animator;
     Enemy EnemyComponent;
     List<Sword> Swords;
     int _nextSwordIndex = 0;
@@ -18,6 +19,7 @@ public class Knight : MonoBehaviour
 
     void Awake()
     {
+        _animator = GetComponent<Animator>();
         Swords = new List<Sword>(GetComponentsInChildren<Sword>());
         EnemyComponent = GetComponent<Enemy>();
 
@@ -33,6 +35,8 @@ public class Knight : MonoBehaviour
 
         if (Swords.Count > 0 && Swords[_nextSwordIndex].AttackReady && _attackCooldownTimer <= 0)
         {
+            _animator.SetInteger("AttackNumber", _nextSwordIndex);
+            _animator.SetTrigger("Attack");
             Swords[_nextSwordIndex].Attack();
             _nextSwordIndex = (_nextSwordIndex + 1) % Swords.Count;
             _attackCooldownTimer = _attackCooldownTime;
