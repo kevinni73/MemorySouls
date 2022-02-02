@@ -1,6 +1,8 @@
 # Memory Souls
 
-Memory Souls is a top-down Souls-like game made as a proof of concept. Memory Souls was originally made in Monogame using Prime31's Nez framework, and was later ported to Unity over a few days. 
+Memory Souls is a top-down Souls-like game made as a proof of concept. Memory Souls was originally made in MonoGame using Prime31's Nez framework, and was later ported to Unity over a few days. 
+
+Fight a boss by walking up to it and entering the prompted button combo - it's always the same combo until you successfully complete one. Make sure to roll in order to dodge attacks!
 
 ## Controls
 Controller recommended
@@ -12,8 +14,8 @@ Controller recommended
 
 ## How to Play
 - Browser: https://kevinni73.github.io/MemorySouls/
-    - note: the WebGL build can't detect input device changes, will always display Xbox controls
-- Windows PC: Unzip "Memory Souls Windows Build.zip" in the /Build folder and run "Memory Souls.exe"
+    - note: the WebGL build can't detect input device changes, so it will always display Xbox controls
+- Windows PC: Unzip "/Build/Memory Souls Windows Build.zip" and run "Memory Souls.exe"
 
 ## Screenshots
 ![](Screenshots/game.png)
