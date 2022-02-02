@@ -22,6 +22,7 @@ Old Version in Monogame, for posterity:
 - Background sprites by [Cainos](https://cainos.itch.io/pixel-art-top-down-basic)
 - Moonlight Greatsword by [DatGuyJekkt](https://www.deviantart.com/datguyjekkt/art/PIXEL-ART-Dark-Souls-Moonlight-Greatsword-795459841), Creative Commons Attribution 3.0 License
 - Input key prompts by [XELU](https://thoseawesomeguys.com/prompts/), Creative Commons 0 License
+- Music by [Wingless Seraph](https://wingless-seraph.net/en/material-music_boss.html)
 
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
