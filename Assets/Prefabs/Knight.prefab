@@ -314,8 +314,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1342399e20fa0d48a012ca06174b83e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _attackCooldownTime: 1.5
   DummySwordPrefab: {fileID: 2944433595814801344, guid: 97e6a35ecea360c4499ce6e392c56d66, type: 3}
+  _attackCooldownTime: 1.3
 --- !u!114 &1736254321070349354
 MonoBehaviour:
   m_ObjectHideFlags: 0

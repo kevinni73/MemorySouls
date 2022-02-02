@@ -37,8 +37,6 @@ public class Knight : MonoBehaviour
         {
             _animator.SetInteger("AttackNumber", _nextSwordIndex);
             _animator.SetTrigger("Attack");
-            Swords[_nextSwordIndex].Attack();
-            _nextSwordIndex = (_nextSwordIndex + 1) % Swords.Count;
             _attackCooldownTimer = _attackCooldownTime;
         }
     }
@@ -59,5 +57,17 @@ public class Knight : MonoBehaviour
             }
             Swords.Clear();
         }
+    }
+
+    public void Attack(float delayTime)
+    {
+        StartCoroutine(AttackCoroutine(delayTime));
+    }
+
+    IEnumerator AttackCoroutine(float waitTime)
+    {
+        yield return new WaitForSeconds(waitTime);
+        Swords[_nextSwordIndex].Attack();
+        _nextSwordIndex = (_nextSwordIndex + 1) % Swords.Count;
     }
 }
