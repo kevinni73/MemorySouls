@@ -8,6 +8,7 @@ public class IndicatorManager : MonoBehaviour
     const float kDotSpacing = 0.2f;
     List<SpriteRenderer> _dotRenderers;
     int _currentIndicatorIndex;
+    Color _gray = new Color(0.65f, 0.65f, 0.65f, 1);
 
     public void Init(int size)
     {
@@ -24,7 +25,7 @@ public class IndicatorManager : MonoBehaviour
         {
             GameObject dot = Instantiate(IndicatorDot, transform.position, Quaternion.identity);
             SpriteRenderer dotRenderer = dot.GetComponent<SpriteRenderer>();
-            dotRenderer.color = Color.gray;
+            dotRenderer.color = _gray;
             _dotRenderers.Add(dotRenderer);
 
             dot.transform.parent = this.transform;
@@ -54,7 +55,7 @@ public class IndicatorManager : MonoBehaviour
         _currentIndicatorIndex = 0;
         foreach (SpriteRenderer renderer in _dotRenderers)
         {
-            renderer.color = Color.gray;
+            renderer.color = _gray;
         }
     }
 

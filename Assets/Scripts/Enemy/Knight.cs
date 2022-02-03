@@ -10,6 +10,7 @@ public class Knight : MonoBehaviour
     [SerializeField] float _attackCooldownTime = 2f;
     float _attackCooldownTimer;
 
+    SpriteRenderer _renderer;
     Animator _animator;
     Enemy EnemyComponent;
     List<Sword> Swords;
@@ -19,6 +20,7 @@ public class Knight : MonoBehaviour
 
     void Awake()
     {
+        _renderer = GetComponent<SpriteRenderer>();
         _animator = GetComponent<Animator>();
         Swords = new List<Sword>(GetComponentsInChildren<Sword>());
         EnemyComponent = GetComponent<Enemy>();
@@ -47,6 +49,7 @@ public class Knight : MonoBehaviour
         {
             _secondPhase = true;
             GetComponentInChildren<AttackButtons>().IncreaseComboSize();
+            _renderer.color = Color.magenta;
         }
         else if (EnemyComponent.Health <= 0)
         {
