@@ -2138,7 +2138,7 @@ MonoBehaviour:
   _rollCooldownTime: 0.25
   _deathTime: 1
   PlayerHealthBar: {fileID: 2004774189}
-  AttackDamage: 50
+  AttackDamage: 10
 --- !u!95 &1521419254
 Animator:
   serializedVersion: 4
