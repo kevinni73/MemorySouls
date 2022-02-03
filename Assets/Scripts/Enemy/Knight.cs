@@ -10,6 +10,7 @@ public class Knight : MonoBehaviour
     [SerializeField] float _attackCooldownTime = 2f;
     float _attackCooldownTimer;
 
+    AudioSource _damagedSfx;
     SpriteRenderer _renderer;
     Animator _animator;
     Enemy EnemyComponent;
@@ -20,12 +21,19 @@ public class Knight : MonoBehaviour
 
     void Awake()
     {
+        _damagedSfx = GetComponent<AudioSource>();
         _renderer = GetComponent<SpriteRenderer>();
         _animator = GetComponent<Animator>();
         Swords = new List<Sword>(GetComponentsInChildren<Sword>());
         EnemyComponent = GetComponent<Enemy>();
 
         EnemyComponent.onTakeDamage += onTakeDamage;
+    }
+
+    void OnDestroy()
+    {
+        FindObjectOfType<Victory>().Enable();
+        GameObject.Find("Boss Info").SetActive(false);
     }
 
     void Update()
@@ -45,6 +53,8 @@ public class Knight : MonoBehaviour
 
     void onTakeDamage()
     {
+        _damagedSfx.Play();
+
         if (!_secondPhase && EnemyComponent.Health <= EnemyComponent.MaxHealth / 2)
         {
             _secondPhase = true;
@@ -70,7 +80,11 @@ public class Knight : MonoBehaviour
     IEnumerator AttackCoroutine(float waitTime)
     {
         yield return new WaitForSeconds(waitTime);
-        Swords[_nextSwordIndex].Attack();
-        _nextSwordIndex = (_nextSwordIndex + 1) % Swords.Count;
+
+        if (_nextSwordIndex < Swords.Count)
+        {
+            Swords[_nextSwordIndex].Attack();
+            _nextSwordIndex = (_nextSwordIndex + 1) % Swords.Count;
+        }
     }
 }

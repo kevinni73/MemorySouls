@@ -45,6 +45,7 @@ public class Player : MonoBehaviour
 
     // Damage
     public int AttackDamage = 10;
+    AudioSource _damagedSFX;
 
     // Other components
     SpriteRenderer _renderer;
@@ -72,6 +73,7 @@ public class Player : MonoBehaviour
         _collider = GetComponent<BoxCollider2D>();
         _animator = GetComponent<Animator>();
         _rb = GetComponent<Rigidbody2D>();
+        _damagedSFX = GetComponent<AudioSource>();
 
         _stateMachine = gameObject.AddComponent<StateMachine>();
         _stateMachine.Init(Enum.GetNames(typeof(State)).Length);
@@ -217,6 +219,8 @@ public class Player : MonoBehaviour
         if (_stateMachine.State != (int)State.Damaged)
         {
             _health -= damage;
+            _damagedSFX.Play();
+
             if (PlayerHealthBar)
             {
                 PlayerHealthBar.SetHealth(_health);
