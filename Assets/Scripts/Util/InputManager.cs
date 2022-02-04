@@ -21,7 +21,7 @@ public class InputManager : MonoBehaviour
     public event Action onRightButtonEvent;
     public event Action<Controls> onControlsChangedEvent;
 
-    private Controls _currentControls = Controls.Keyboard;
+    private Controls _currentControls = Controls.Xbox;
     public Controls CurrentControls
     {
         get => _currentControls;
